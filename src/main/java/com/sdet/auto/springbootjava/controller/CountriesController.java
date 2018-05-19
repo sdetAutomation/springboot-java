@@ -4,10 +4,8 @@ import com.sdet.auto.springbootjava.model.CountryObject;
 import com.sdet.auto.springbootjava.repository.CountriesRepository;
 import com.sdet.auto.springbootjava.service.CountriesService;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
@@ -25,5 +23,12 @@ public class CountriesController {
     public List<CountryObject> getCountries()  {
         CountriesService countriesService = new CountriesService(countriesRepository);
         return countriesService.getAll();
+    }
+
+    @ResponseBody
+    @RequestMapping(value="{iso2}", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE)
+    public CountryObject getByCountry(@PathVariable String iso2)  {
+        CountriesService countriesService = new CountriesService(countriesRepository);
+        return countriesService.getByIso2(iso2);
     }
 }

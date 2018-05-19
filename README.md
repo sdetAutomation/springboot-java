@@ -11,3 +11,6 @@ http://services.groupkt.com/country/get/all
 http://www.groupkt.com/post/c9b0ccb9/country-and-other-related-rest-webservices.htm
 
 http://services.groupkt.com/country/get/iso2code/IN
+
+brew services start mongodb
+brew services stop mongodb

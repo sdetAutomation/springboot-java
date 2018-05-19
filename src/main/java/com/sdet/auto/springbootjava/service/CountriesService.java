@@ -8,6 +8,7 @@ import com.sdet.auto.springbootjava.repository.CountriesRepository;
 import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CountriesService {
@@ -29,12 +30,12 @@ public class CountriesService {
 
         for (Countries country : ListOfCountries){
             // make call to get country name and 3digit iso
-            ResultObject resultObject = GroupktProxy.getGroupktInfo(country.getIso_2());
+            ResultObject resultObject = GroupktProxy.getGroupktInfo(country.getIso2());
 
             CountryObject countryObject = new CountryObject();
 
             countryObject.setName(resultObject.getName());
-            countryObject.setIso_2(country.getIso_2());
+            countryObject.setIso_2(country.getIso2());
             countryObject.setIso_3(resultObject.getAlpha3_code());
             countryObject.setPopulation(country.getPopulation());
             countryObject.setCapital(country.getCapital());
@@ -43,5 +44,23 @@ public class CountriesService {
         }
 
         return countriesList;
+    }
+
+    public CountryObject getByIso2(String iso2) {
+
+        Optional<Countries> country = countriesRepository.findById(iso2.toUpperCase());
+
+        // make call to get country name and 3digit iso
+        ResultObject resultObject = GroupktProxy.getGroupktInfo(country.get().getIso2());
+
+        CountryObject countryObject = new CountryObject();
+
+        countryObject.setName(resultObject.getName());
+        countryObject.setIso_2(country.get().getIso2());
+        countryObject.setIso_3(resultObject.getAlpha3_code());
+        countryObject.setPopulation(country.get().getPopulation());
+        countryObject.setCapital(country.get().getCapital());
+
+        return countryObject;
     }
 }

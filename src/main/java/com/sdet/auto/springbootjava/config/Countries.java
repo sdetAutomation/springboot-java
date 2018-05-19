@@ -3,6 +3,7 @@ package com.sdet.auto.springbootjava.config;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -12,6 +13,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Countries {
 
     private Integer population;
-    private String iso_2;
+    @Id
+    private String iso2;
     private String capital;
 }
