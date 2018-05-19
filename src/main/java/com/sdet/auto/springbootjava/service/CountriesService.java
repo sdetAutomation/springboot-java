@@ -30,13 +30,13 @@ public class CountriesService {
 
         for (Countries country : ListOfCountries){
             // make call to get country name and 3digit iso
-            ResultObject resultObject = GroupktProxy.getGroupktInfo(country.getIso2());
+            ResultObject proxy = GroupktProxy.getGroupktInfo(country.getIso2());
 
             CountryObject countryObject = new CountryObject();
 
-            countryObject.setName(resultObject.getName());
+            countryObject.setName(proxy.getName());
             countryObject.setIso_2(country.getIso2());
-            countryObject.setIso_3(resultObject.getAlpha3_code());
+            countryObject.setIso_3(proxy.getAlpha3_code());
             countryObject.setPopulation(country.getPopulation());
             countryObject.setCapital(country.getCapital());
 
@@ -51,15 +51,35 @@ public class CountriesService {
         Optional<Countries> country = countriesRepository.findById(iso2.toUpperCase());
 
         // make call to get country name and 3digit iso
-        ResultObject resultObject = GroupktProxy.getGroupktInfo(country.get().getIso2());
+        ResultObject proxy = GroupktProxy.getGroupktInfo(country.get().getIso2());
 
         CountryObject countryObject = new CountryObject();
 
-        countryObject.setName(resultObject.getName());
+        countryObject.setName(proxy.getName());
         countryObject.setIso_2(country.get().getIso2());
-        countryObject.setIso_3(resultObject.getAlpha3_code());
+        countryObject.setIso_3(proxy.getAlpha3_code());
         countryObject.setPopulation(country.get().getPopulation());
         countryObject.setCapital(country.get().getCapital());
+
+        return countryObject;
+    }
+
+    public CountryObject updatePopulation(String iso2, CountryObject countryObject) {
+
+        Optional<Countries> country = countriesRepository.findById(iso2.toUpperCase());
+        // setting new population from the population from the countryObject
+        country.get().setPopulation(countryObject.getPopulation());
+
+        // make call to get country name and 3digit iso
+        ResultObject proxy = GroupktProxy.getGroupktInfo(country.get().getIso2());
+
+        countryObject.setName(proxy.getName());
+        countryObject.setIso_2(iso2);
+        countryObject.setIso_3(proxy.getAlpha3_code());
+        countryObject.setPopulation(country.get().getPopulation());
+        countryObject.setCapital(country.get().getCapital());
+
+        countriesRepository.save(country.get());
 
         return countryObject;
     }

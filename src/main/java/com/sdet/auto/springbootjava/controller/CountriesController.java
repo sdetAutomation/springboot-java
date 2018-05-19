@@ -31,4 +31,11 @@ public class CountriesController {
         CountriesService countriesService = new CountriesService(countriesRepository);
         return countriesService.getByIso2(iso2);
     }
+
+    @ResponseBody
+    @RequestMapping(value="{iso2}", method = RequestMethod.PUT, produces= MediaType.APPLICATION_JSON_VALUE)
+    public CountryObject update(@PathVariable String iso2, @RequestBody CountryObject countryObject)  {
+        CountriesService countriesService = new CountriesService(countriesRepository);
+        return countriesService.updatePopulation(iso2, countryObject);
+    }
 }
