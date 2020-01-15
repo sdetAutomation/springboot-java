@@ -10,6 +10,7 @@
 # springboot-java
 Example project using Spring Boot framework to create a web api service.  
 
+[![Build Status](https://travis-ci.org/sdetAutomation/springboot-java.svg?branch=master)](https://travis-ci.org/sdetAutomation/springboot-java)
 
 Introduction
 ------------
